@@ -1,14 +1,22 @@
 __author__ = 'mysterylz'
 # import pymssql
+
 from readerClass import*
 from ClientThread import*
+from Functions import*
+from serial.tools import list_ports
 
 
+
+# print list(list_ports.comports())
+# print auto_detect_serial_unix()
 # Reader
-port = "/dev/ttyUSB1"
+# port = "/dev/ttyUSB1"
+serialport = auto_detect_serial_unix()
 baud = 19200
 databit = 8
 
+print serialport
 # Server IP & PORT
 HOST = "10.50.41.81"
 PORT = 43
@@ -19,8 +27,12 @@ reader = Readers()
 reader.clientsocket.setting(ReaderName, HOST, PORT, TIMEOUT)
 
 count = 0
+print "Searching serial port"
+while serialport == "":
+    serialport = auto_detect_serial_unix()
+
 print "Setting Reader"
-while not reader.SettingReader('R001', reader._DF760MSB, port, baud, databit, reader.SINGLEPACKET):
+while not reader.SettingReader('R001', reader._DF760MSB, serialport, baud, databit, reader.SINGLEPACKET):
     count += 1
 count = 0
 print "Setting Reader OK"

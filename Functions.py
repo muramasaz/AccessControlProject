@@ -1,6 +1,7 @@
 __author__ = 'mysterylz'
 #Function__
 import operator
+import fnmatch
 
 
 def newdatasequence(olddata, datasize):
@@ -88,3 +89,26 @@ def deleteunusedata(lendata, data, lsb):
         return reduce(operator.add, tmp)
     else:
         return False
+
+def auto_detect_serial_unix(preferred_list=['*']):
+    '''try to auto-detect serial ports on win32'''
+    import glob
+    glist = glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
+    ret = []
+
+    # try preferred ones first
+    for d in glist:
+        for preferred in preferred_list:
+            if fnmatch.fnmatch(d, preferred):
+                ret.append(d)
+    if len(ret) > 0:
+        # print "Port[1]: {0}".format(ret[0])
+        return ret[0]
+    # now the rest
+    for d in glist:
+        ret.append(d)
+    # print "Port[2]: {0}".format(len(ret))
+    if len(ret) > 0:
+        return ret
+    else:
+        return ""
