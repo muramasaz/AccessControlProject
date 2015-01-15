@@ -4,7 +4,7 @@ __author__ = 'mysterylz'
 from readerClass import*
 from ClientThread import*
 from Functions import*
-from serial.tools import list_ports
+#from serial.tools import list_ports
 
 
 
