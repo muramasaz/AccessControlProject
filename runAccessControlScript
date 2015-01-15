@@ -1,0 +1,6 @@
+#! /bin/sh
+# runAccessControlScript
+# Starting access control at start up
+
+cd /home/pi/Desktop/AccessControlProject
+sudo python Main.py
