@@ -240,29 +240,7 @@ class Readers:
                 return False
         else:
             return False
-        #Check Card ID in database
-        # if types == self._CARD:
-        #     self.clientsocket.SendDataToServer(self._readerID, data, 0)
-        #
-        #     while len(self.clientsocket.MESSAGE) < 1:
-        #         time.sleep(1)
-        #     tmp = self.CheckPacket(self.clientsocket.MESSAGE)
-        #     if tmp:
-        #         return True
-        #     else:
-        #         return False
-        # elif types == self._PASSWORD:
-        #     self.clientsocket.SendDataToServer(self._readerID, data, 0)
-        #     while len(self.clientsocket.MESSAGE) < 1:
-        #         time.sleep(1)
-        #     tmp = self.CheckPacket(self.clientsocket.MESSAGE)
-        #     if tmp:
-        #         return True
-        #     else:
-        #         return False
-        # else:
-        #     return types
-
+        
     def CheckPacket(self, data):
         data = str(data)
         checkReaderID = data.find(self._readerID, 0, len(data))
@@ -455,7 +433,7 @@ class Readers:
 
         # Change Reader ID
         tmp = str(self.clientsocket.getreaderid())
-        if tmp.find(self._readerID, 0, len(tmp)) >= 0:
+        if not tmp.find(self._readerID, 0, len(tmp)) >= 0:
             self._readerID = tmp
         # print "Reader ID: ", self._readerID
         # Check Reader's connection

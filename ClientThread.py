@@ -50,6 +50,7 @@ class socket_client(threading.Thread):
     disconnect = False
     settingflag = False
     settingcomplete = False
+    INITREADERNAME = False
 
     def __init__(self, rid, ip, port, timeout):
         super(socket_client, self).__init__()
@@ -101,10 +102,10 @@ class socket_client(threading.Thread):
                 self.checkcommand(data)
                 data = True
 
-            except socket.error:
-                self.disconnect = True
             except socket.timeout:
                 data = True
+            except socket.error:
+                self.disconnect = True
 
     def senddata(self, text):
         try:
@@ -124,7 +125,7 @@ class socket_client(threading.Thread):
         typeOfDataErr = 0
         sendError = 5
 
-        #__Packet creating
+        # Packet creating
         if types == 0:
             Message = "#{0}C{1}#".format(readerID, data)
         elif types == 1:
@@ -133,7 +134,7 @@ class socket_client(threading.Thread):
             Message = "#{0}{1}#".format(readerID, data)
         else:
             return typeOfDataErr
-        #__Packet sending
+        # Packet sending
         try:
             self.client.send(str(Message))
             return True
@@ -153,13 +154,16 @@ class socket_client(threading.Thread):
 
         # print "Data IN: %s Len: %s" % (data, len(data))
         if data.find(self.ID, 0, len(data)) > 0 or data.find(self.BID, 0, len(data)) > 0:
-            if data.find("I", 0, len(data)) >= 0:
+            # Set new server IP, Port, Timeout
+            if data.find("I", 0, len(data)) >= 0 and data.find("N", 0, len(data)) < 0:
                 i = data.find("I", 0, len(data)) + 1
+                # Save new server port
                 while i < data.find("P", 0, len(data)):
                     ip.append(data[i])
                     i += 1
                 ip = reduce(operator.add, ip)
                 i = data.find("P", 0, len(data)) + 1
+                # Save new timeout
                 while i < data.find("T", 0, len(data)):
                     port.append(data[i])
                     i += 1
@@ -172,16 +176,29 @@ class socket_client(threading.Thread):
                 timeout = reduce(operator.add, timeout)
                 timeout = int(timeout)
                 #print "IP = %s \nPORT = %s \nTIME = %s" % (ip, port, timeout)
+                # Set new server IP, Port, Timeout
                 self.setting(self.ID, ip, port, timeout)
+            # Set new reader ID
             elif data.find("N", 0, len(data)) >= 0:
                 i = data.find("N", 0, len(data)) + 1
                 # print "i = {0} len = {1} data = {2}".format(i, len(data), data)
-                while i < data.find("$", 1, len(data)):
-                    rid.append(data[i])
+                if data.find("I", i-1, len(data)) >= 0:
                     i += 1
-                # print(rid)
-                rid = reduce(operator.add, rid)
-                self.ID = rid
+                    if not self.INITREADERNAME:
+                        self.INITREADERNAME = True
+                        while i < data.find("$", 1, len(data)):
+                            rid.append(data[i])
+                            i += 1
+                        # print(rid)
+                        rid = reduce(operator.add, rid)
+                        self.ID = rid
+                else:
+                    while i < data.find("$", 1, len(data)):
+                        rid.append(data[i])
+                        i += 1
+                    # print(rid)
+                    rid = reduce(operator.add, rid)
+                    self.ID = rid
         else:
             # print "Debug Reader not match\n"
             self.MESSAGE = ""
@@ -189,30 +206,3 @@ class socket_client(threading.Thread):
 
     def getreaderid(self):
         return self.ID
-
-# client = socket_client("R001", "127.0.0.1", 23, 20)
-#
-# client.start()
-# while not client.connect:
-#     print "Connecting..."
-#     time.sleep(1)
-# print "Connected"
-# raw = input()
-# #client.client.close()
-# client.setting("R002", "127.0.0.1", 30, 20)
-# count = 0
-# while client.settingflag:
-#     count += 1
-# while not client.settingcomplete:
-#     count += 1
-# print "Setting completed"
-#client.SendDataToServer("R001", "FFEEDDCCBBAA", 0)
-# count = 0
-# while len(client.MESSAGE) <= 1:
-#     count += 1
-# print client.MESSAGE
-# #     client.run()
-# while 1:
-#     print client.connect
-#     print client.SendDataToServer("R0001", "test", 0)
-#     print client.SendDataToServer("R0001", "TEST", 1)
