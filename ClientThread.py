@@ -199,6 +199,8 @@ class socket_client(threading.Thread):
                     # print(rid)
                     rid = reduce(operator.add, rid)
                     self.ID = rid
+            elif data.find("GR", 0, len(data) >= 0):
+                self.SendDataToServer(self.ID, "", 2)
         else:
             # print "Debug Reader not match\n"
             self.MESSAGE = ""
