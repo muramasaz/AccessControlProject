@@ -5,6 +5,7 @@ import serial
 import Functions
 import ClientThread
 
+
 class Readers:
 
     #Property
@@ -108,6 +109,7 @@ class Readers:
                 self._serialPort.close()
                 #_serialPort.open()
                 self._issetSerial = 1
+                self.SaveSettingToFile()
                 return True
             except serial.SerialException:
                 endlessLoop = True
@@ -119,6 +121,7 @@ class Readers:
             self._TCP_IP = serverip
             self._TCP_PORT = serverport
             self._TIMEOUT = timeout
+            self.SaveSettingToFile()
             return True
         except:
             return False
@@ -147,7 +150,7 @@ class Readers:
             flag = self.SetSerialPort(port, baud, databit)
             if not flag:
                 return False
-
+            self.SaveSettingToFile()
             return True
         except:
             return False
@@ -435,6 +438,8 @@ class Readers:
         tmp = str(self.clientsocket.getreaderid())
         if not tmp.find(self._readerID, 0, len(tmp)) >= 0:
             self._readerID = tmp
+            self.SaveSettingToFile()
+
         # print "Reader ID: ", self._readerID
         # Check Reader's connection
         if self._issetSerial != 1:
@@ -593,7 +598,7 @@ class Readers:
         except serial.SerialException:
             return _serialPortErr
 
-    def DF760KLsb(self, level=2):
+    def DF760KLsb(self, level=_CARDANDPASSWORD):
         # Error Code
         _connectionErr = 1
         _serialPortErr = 2
@@ -603,8 +608,9 @@ class Readers:
 
         # Change Reader ID
         tmp = str(self.clientsocket.getreaderid())
-        if tmp.find(self._readerID, 0, len(tmp)) >= 0:
+        if not tmp.find(self._readerID, 0, len(tmp)) >= 0:
             self._readerID = tmp
+            self.SaveSettingToFile()
 
         # Check Reader's connection
         if self._issetSerial != 1:
@@ -737,3 +743,35 @@ class Readers:
 
         except serial.SerialException:
             return _serialPortErr
+
+    def SaveSettingToFile(self):
+        try:
+            files = open("Setting.txt", mode='w')
+            files.writelines(self._readerID)
+            files.writelines("\n")
+            files.writelines(str(self._baud))
+            files.writelines("\n")
+            files.writelines(str(self._dataBit))
+            files.writelines("\n")
+            files.writelines(self._TCP_IP)
+            files.writelines("\n")
+            files.writelines(self._TCP_PORT)
+            files.writelines("\n")
+            files.writelines(self._TIMEOUT)
+            files.writelines("\n")
+
+            if self._MSBORLSB == self._DF760MSB:
+                files.writelines("DF760MSB")
+            elif self._MSBORLSB == self._DF760LSB:
+                files.writelines("DF760LSB")
+            files.writelines("\n")
+
+            if self._packettype == self.SINGLEPACKET:
+                files.writelines("SINGLEPACKET")
+            elif self._packettype == self.MULTIPACKETS:
+                files.writelines("MULTIPACKET")
+            files.close()
+            return True
+        except:
+            # print "Writing file fail"
+            return False

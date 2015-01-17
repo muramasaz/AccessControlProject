@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AccessControlProject.iml" filepath="$PROJECT_DIR$/.idea/AccessControlProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/.idea/CommunicationReaderAndWebRelay.iml" filepath="$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/.idea/CommunicationReaderAndWebRelay.iml" />
     </modules>
   </component>
 </project>
