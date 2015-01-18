@@ -755,9 +755,9 @@ class Readers:
             files.writelines("\n")
             files.writelines(self._TCP_IP)
             files.writelines("\n")
-            files.writelines(self._TCP_PORT)
+            files.writelines(str(self._TCP_PORT))
             files.writelines("\n")
-            files.writelines(self._TIMEOUT)
+            files.writelines(str(self._TIMEOUT))
             files.writelines("\n")
 
             if self._MSBORLSB == self._DF760MSB:

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="63192269-a02f-43c8-a9d2-37ce648300da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="63192269-a02f-43c8-a9d2-37ce648300da" name="Default" comment="" />
     <ignored path="AccessControlProject.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="readerClass.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="readerClass.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/readerClass.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2749" max-vertical-offset="6460">
-              <caret line="447" column="12" selection-start-line="447" selection-start-column="12" selection-end-line="447" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.53636366" vertical-offset="5580" max-vertical-offset="6460">
+              <caret line="767" column="48" selection-start-line="767" selection-start-column="48" selection-end-line="767" selection-end-column="48" />
               <folding>
                 <element signature="e#25#36#0" expanded="true" />
                 <element signature="e#886#914#0" expanded="false" />
@@ -76,10 +73,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestTemp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestTemp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/TestTemp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57954544" vertical-offset="102" max-vertical-offset="1921">
+            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1921">
               <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
               <folding>
                 <element signature="e#43#67#0" expanded="true" />
@@ -489,10 +486,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/ClientThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1347" max-vertical-offset="2227">
+          <caret line="87" column="42" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
+          <folding>
+            <element signature="e#3844#4501#0" expanded="false" />
+            <element signature="e#4545#7161#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/TestTemp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1921">
+          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+          <folding>
+            <element signature="e#43#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/readerClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2647" max-vertical-offset="6460">
-          <caret line="447" column="12" selection-start-line="447" selection-start-column="12" selection-end-line="447" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.53636366" vertical-offset="5580" max-vertical-offset="6460">
+          <caret line="767" column="48" selection-start-line="767" selection-start-column="48" selection-end-line="767" selection-end-column="48" />
           <folding>
             <element signature="e#25#36#0" expanded="true" />
             <element signature="e#886#914#0" expanded="false" />
@@ -519,27 +537,6 @@
             <element signature="e#10440#13329#0" expanded="false" />
             <element signature="e#13387#13447#0" expanded="false" />
             <element signature="e#21108#27940#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/ClientThread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1347" max-vertical-offset="2227">
-          <caret line="87" column="42" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
-          <folding>
-            <element signature="e#3844#4501#0" expanded="false" />
-            <element signature="e#4545#7161#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../The Doors/CommunicationReaderAndWebRelay/TestTemp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57954544" vertical-offset="102" max-vertical-offset="1921">
-          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
-          <folding>
-            <element signature="e#43#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
