@@ -68,8 +68,8 @@ class socket_client(threading.Thread):
                 #self.client.settimeout(self.TIMEOUT)
                 self.connect = True
                 #print "Debug 3\n"
-            except socket.error:
-                #print "Debug 2\n"
+            except socket.error as e:
+                print "Socket Error Code: {0}".format(e.errno)
                 self.connect = False
 
         data = True
