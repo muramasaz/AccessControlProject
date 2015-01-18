@@ -35,8 +35,8 @@ class Readers:
     _CARDANDPASSWORD = 2
 
     #Lenght of password and Card ID
-    _PASSWORDLEN = 6
-    _CARDLEN = 12
+    _PASSWORDLEN = 8
+    _CARDLEN = 14
 
     #Server details
     _TCP_IP = "127.0.0.1"
@@ -229,13 +229,14 @@ class Readers:
 
         # Clear buffer for receive new data from server
         self.clientsocket.MESSAGE = ""
-        print "Send to Server "
+        #print "Send to Server "
 
         # Connection flag
         connectErr = False
         if self.clientsocket.SendDataToServer(self._readerID, data, types) == 5:
             self.clientsocket.settingflag = True
             connectErr = True
+	    #print "Server disconnected"
 
         # Waiting data from server
         while len(self.clientsocket.MESSAGE) < 1 and not connectErr:
@@ -467,7 +468,7 @@ class Readers:
                     # print "Debug 1-0"
                     if not data.isdigit():
                         data = data[:-1]
-                    data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
+                    #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
                     # Save password
                     password = data
                     # print "Debug 1-1"
@@ -482,7 +483,7 @@ class Readers:
                                 # It's Password again
                                 return _cardErr
                             else:
-                                data = Functions.deleteunusedata(self._CARDLEN, data, 0)
+                                #data = Functions.deleteunusedata(self._CARDLEN, data, 0)
                                 if len(data) > self._CARDLEN:
                                     data = data[:-1]
                                 if self.CheckData(data, self._CARD):
@@ -503,7 +504,7 @@ class Readers:
                             # It's Password again
                             return _cardErr
                         else:
-                            data = Functions.deleteunusedata(self._CARDLEN, data, 0)
+                            #data = Functions.deleteunusedata(self._CARDLEN, data, 0)
                             if len(data) > self._CARDLEN:
                                 data = data[:-1]
                             data = self.PackCardPassword(data, password)
@@ -516,7 +517,7 @@ class Readers:
                                 return False
                 else:
                     # When Card first
-                    data = Functions.deleteunusedata(self._CARDLEN, data, 0)
+                    #data = Functions.deleteunusedata(self._CARDLEN, data, 0)
                     if len(data) > self._CARDLEN:
                         data = data[:-1]
                     card = data
@@ -534,7 +535,7 @@ class Readers:
                             # Delete over data
                             if not data.isdigit():
                                 data = data[:-1]
-                            data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
+                            #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
                             # print "Debug 2-2"
                             # Check Password or Card ID
                             if self.IsPassword(data):
@@ -558,9 +559,9 @@ class Readers:
                         # Delete over data
                         if not data.isdigit():
                             data = data[:-1]
-                        data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
-                        print "Debug 2-2"
-                        print data
+                        #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
+                        #print "Debug 2-2"
+                        #print data
                         # Check Password or Card ID
                         if self.IsPassword(data):
                             data = self.PackCardPassword(card, data)
@@ -578,7 +579,7 @@ class Readers:
             elif level == self._CARD:
                 # Check RFID Tag or not
                 if not self.IsPassword(data):
-                    data = Functions.deleteunusedata(self._CARDLEN, data, 0)
+                    #data = Functions.deleteunusedata(self._CARDLEN, data, 0)
                     if len(data) > self._CARDLEN:
                         data = data[:-1]
                     # Check RFID Tag ID
@@ -594,7 +595,7 @@ class Readers:
                 if self.IsPassword(data):
                     if not data.isdigit():
                         data = data[:-1]
-                    data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
+                    #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 0)
                     # Check password
                     if self.CheckData(data, self._PASSWORD):
                         return True
@@ -633,7 +634,7 @@ class Readers:
                 if self.IsPassword(data):
                     if not data.isdigit():
                         data = data[:-1]
-                    data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
+                    #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
                     #time.sleep(1)
                     data = Functions.newdatasequence(data, self._PASSWORDLEN)
                     password = data
@@ -647,7 +648,7 @@ class Readers:
                                 # It's Password again
                                 return _cardErr
                             else:
-                                data = Functions.deleteunusedata(self._CARDLEN, data, 1)
+                               #data = Functions.deleteunusedata(self._CARDLEN, data, 1)
                                 #time.sleep(1)
                                 if len(data) > self._CARDLEN:
                                     data = data[:-1]
@@ -669,7 +670,7 @@ class Readers:
                             # It's Password again
                             return _cardErr
                         else:
-                            data = Functions.deleteunusedata(self._CARDLEN, data, 1)
+                            #data = Functions.deleteunusedata(self._CARDLEN, data, 1)
                             #time.sleep(1)
                             if len(data) > self._CARDLEN:
                                 data = data[:-1]
@@ -685,7 +686,7 @@ class Readers:
                     # When Card first
                     if len(data) > self._CARDLEN:
                         data = data[:-1]
-                    data = Functions.deleteunusedata(self._CARDLEN, data, 1)
+                    #data = Functions.deleteunusedata(self._CARDLEN, data, 1)
                     data = Functions.newdatasequence(data, self._CARDLEN)
                     card = data
                     if self._packettype == self.MULTIPACKETS:
@@ -696,7 +697,7 @@ class Readers:
                             if self.IsPassword(data):
                                 if not data.isdigit():
                                     data = data[:-1]
-                                data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
+                                #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
                                 data = Functions.newdatasequence(data, self._PASSWORDLEN)
                                 if self.CheckData(data, self._PASSWORD):
                                     # Login complete
@@ -716,7 +717,7 @@ class Readers:
                         if self.IsPassword(data):
                             if not data.isdigit():
                                 data = data[:-1]
-                            data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
+                            #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
                             data = Functions.newdatasequence(data, self._PASSWORDLEN)
                             data = self.PackCardPassword(card, data)
                             if self.CheckData(data, self._PASSWORD):
@@ -732,7 +733,7 @@ class Readers:
                 # Check Tag
                 if len(data) > self._CARDLEN:
                     data = data[:-1]
-                data = Functions.deleteunusedata(self._CARDLEN, data, 1)
+                #data = Functions.deleteunusedata(self._CARDLEN, data, 1)
                 data = Functions.newdatasequence(data, self._CARDLEN)
                 if self.CheckData(data, self._CARD):
                     return True
@@ -742,7 +743,7 @@ class Readers:
                 # Check Password
                 if not data.isdigit():
                     data = data[:-1]
-                data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
+                #data = Functions.deleteunusedata(self._PASSWORDLEN, data, 1)
                 data = Functions.newdatasequence(data, self._PASSWORDLEN)
                 if self.CheckData(data, self._PASSWORD):
                     return True

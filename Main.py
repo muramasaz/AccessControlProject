@@ -57,7 +57,7 @@ except:
 # port = "/dev/ttyUSB1"
 serialport = auto_detect_serial_unix()
 #serialport = 'COM3'
-reader.clientsocket.setting(ReaderName, HOST, PORT, TIMEOUT)
+#reader.clientsocket.setting(ReaderName, HOST, PORT, TIMEOUT)
 reader.SettingServer(HOST, PORT, TIMEOUT)
 #--------------End Init Property------------------#
 

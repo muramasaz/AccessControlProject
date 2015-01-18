@@ -4,6 +4,7 @@ import socket
 import sys
 import time
 import operator
+import fileinput
 
 
 class socket_server(threading.Thread):
@@ -69,7 +70,7 @@ class socket_client(threading.Thread):
                 self.connect = True
                 #print "Debug 3\n"
             except socket.error as e:
-                print "Socket Error Code: {0}".format(e.errno)
+                #print "Socket Error Code: {0}".format(e.errno)
                 self.connect = False
 
         data = True
@@ -77,11 +78,12 @@ class socket_client(threading.Thread):
             try:
                 if self.settingflag:
                     try:
-                        self.client.shutdown(socket.SHUT_RDWR)
-                        time.sleep(0.1)
+                        #self.client.shutdown(socket.SHUT_RDWR)
+                        #time.sleep(0.1)
                         self.client.close()
                         clientclose = True
-                    except socket.error:
+                    except socket.error as e:
+			#print "Socket closing fail. Error Code: {0}".format(e.errno)
                         clientclose = False
 
                     if clientclose:
@@ -89,10 +91,12 @@ class socket_client(threading.Thread):
                         #self.client.settimeout(self.TIMEOUT)
                         while self.settingflag:
                             try:
+				#print "IP: {0} Port: {1}".format(self.TCP_IP, self.TCP_PORT)
                                 self.client.connect((self.TCP_IP, self.TCP_PORT))
                                 self.settingflag = False
                                 self.settingcomplete = True
                             except socket.error:
+				#print "Setting socket fail"
                                 self.settingflag = True
                     else:
                         self.settingflag = True
@@ -102,8 +106,8 @@ class socket_client(threading.Thread):
                 self.checkcommand(data)
                 data = True
 
-            except socket.timeout:
-                data = True
+            #except socket.timeout:
+                #data = True
             except socket.error:
                 self.disconnect = True
 
@@ -152,7 +156,7 @@ class socket_client(threading.Thread):
         timeout = list()
         rid = list()
 
-        # print "Data IN: %s Len: %s" % (data, len(data))
+        #print "Data IN: %s Len: %s" % (data, len(data))
         if data.find(self.ID, 0, len(data)) > 0 or data.find(self.BID, 0, len(data)) > 0:
             # Set new server IP, Port, Timeout
             if data.find("I", 0, len(data)) >= 0 and data.find("N", 0, len(data)) < 0:
@@ -185,22 +189,26 @@ class socket_client(threading.Thread):
                 if data.find("I", i-1, len(data)) >= 0:
                     i += 1
                     if not self.INITREADERNAME:
+			#print "Set reader ID 1st time"
                         self.INITREADERNAME = True
                         while i < data.find("$", 1, len(data)):
                             rid.append(data[i])
                             i += 1
                         # print(rid)
                         rid = reduce(operator.add, rid)
-                        self.ID = rid
+			if self.checkreaderidfromsettingfile(rid):
+	                  self.ID = rid
                 else:
+		    #print "Set new reader ID"
                     while i < data.find("$", 1, len(data)):
                         rid.append(data[i])
                         i += 1
                     # print(rid)
                     rid = reduce(operator.add, rid)
                     self.ID = rid
-            elif data.find("GR", 0, len(data) >= 0):
-                self.SendDataToServer(self.ID, "", 2)
+           # elif data.find("GR", 0, len(data) >= 0):
+		#print "Get reader name"
+                #self.SendDataToServer(self.ID, "", 2)
         else:
             # print "Debug Reader not match\n"
             self.MESSAGE = ""
@@ -208,3 +216,14 @@ class socket_client(threading.Thread):
 
     def getreaderid(self):
         return self.ID
+ 
+    def checkreaderidfromsettingfile(self, rid):
+	settingData = list()
+	for line in fileinput.input("Setting.txt", mode="r"):
+	    settingData.append(line)
+	readerID = str(settingData[0]).rstrip()
+	if readerID.find("RFFF", 0) >= 0:
+	  return True
+        else:
+	  return False
+
