@@ -109,7 +109,8 @@ class Readers:
                 self._serialPort.close()
                 #_serialPort.open()
                 self._issetSerial = 1
-                self.SaveSettingToFile()
+                # print "Set Serial Port"
+                # self.SaveSettingToFile()
                 return True
             except serial.SerialException:
                 endlessLoop = True
@@ -121,7 +122,9 @@ class Readers:
             self._TCP_IP = serverip
             self._TCP_PORT = serverport
             self._TIMEOUT = timeout
-            self.SaveSettingToFile()
+            # print "Set Server"
+            # self.SaveSettingToFile()
+            self.clientsocket.setting(self._readerID, serverip, serverport, timeout)
             return True
         except:
             return False
@@ -139,6 +142,9 @@ class Readers:
         try:
             self._readerID = readerid
             self._packettype = packettype
+            self._port = port
+            self._baud = baud
+            self._dataBit = databit
 
             if readerType == self._DF760MSB:
                 self._MSBORLSB = self._DF760MSB
@@ -147,10 +153,11 @@ class Readers:
             else:
                 self._MSBORLSB = self._DF760MSB
 
+            # print "Set Reader"
+            # self.SaveSettingToFile()
             flag = self.SetSerialPort(port, baud, databit)
             if not flag:
                 return False
-            self.SaveSettingToFile()
             return True
         except:
             return False
@@ -437,6 +444,7 @@ class Readers:
         # Change Reader ID
         tmp = str(self.clientsocket.getreaderid())
         if not tmp.find(self._readerID, 0, len(tmp)) >= 0:
+            # print "Saving new reader ID"
             self._readerID = tmp
             self.SaveSettingToFile()
 
